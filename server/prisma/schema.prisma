@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  password     String
+  name         String?
+  role         String     @default("USER") // ADMIN, USER
+  businesses   Business[]
+  subscription String     @default("FREE") // FREE, PRO, PREMIUM
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Business {
+  id          String    @id @default(uuid())
+  ownerId     String
+  owner       User      @relation(fields: [ownerId], references: [id])
+  name        String
+  category    String    // Restaurant, Salon, etc.
+  slug        String    @unique
+  logo        String?
+  description String?
+  email       String?
+  phone       String?
+  address     String?
+  hours       Json?     // Store hours in JSON
+  templateId  String    @default("default")
+  themeConfig Json?     // Colors, fonts, etc.
+  products    Product[]
+  services    Service[]
+  analytics   Analytics[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id])
+  name        String
+  description String?
+  price       Float
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id])
+  name        String
+  description String?
+  price       Float?
+  duration    String?  // e.g., "30 mins"
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Analytics {
+  id          String   @id @default(uuid())
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id])
+  eventType   String   // "visit", "click", "order"
+  metadata    Json?
+  createdAt   DateTime @default(now())
+}
