@@ -38,7 +38,7 @@ export default function BusinessBuilder() {
       const config = {
         headers: { Authorization: `Bearer ${user.token}` }
       }
-      await axios.post('http://localhost:5000/api/businesses', formData, config)
+      await axios.post('https://localbiz-o59o.onrender.com/api/businesses', formData, config)
       navigate('/dashboard/websites')
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create business.')

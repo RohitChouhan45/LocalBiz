@@ -17,7 +17,7 @@ export default function Signup() {
     setError('')
     
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password })
+      const { data } = await axios.post('https://localbiz-o59o.onrender.com/api/auth/signup', { name, email, password })
       localStorage.setItem('user', JSON.stringify(data))
       navigate('/dashboard')
     } catch (err) {

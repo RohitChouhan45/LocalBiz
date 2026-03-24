@@ -12,7 +12,7 @@ export default function MyWebsites() {
     const fetchWebsites = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } }
-        const { data } = await axios.get('http://localhost:5000/api/businesses', config)
+        const { data } = await axios.get('https://localbiz-o59o.onrender.com/api/businesses', config)
         setWebsites(data)
       } catch (err) {
         console.error(err)

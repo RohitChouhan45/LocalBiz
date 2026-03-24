@@ -15,10 +15,10 @@ export default function PublicSite() {
   useEffect(() => {
     const fetchBusiness = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/businesses/site/${slug}`)
+        const { data } = await axios.get(`https://localbiz-o59o.onrender.com/api/businesses/site/${slug}`)
         setBusiness(data)
         // Record visit
-        axios.post('http://localhost:5000/api/analytics', { businessId: data.id, eventType: 'visit' })
+        axios.post('https://localbiz-o59o.onrender.com/api/analytics', { businessId: data.id, eventType: 'visit' })
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to load website')
       } finally {

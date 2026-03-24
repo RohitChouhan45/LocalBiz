@@ -19,7 +19,7 @@ export default function ProductManagement() {
 
   useEffect(() => {
     const fetchStuff = async () => {
-      const { data } = await axios.get('http://localhost:5000/api/businesses', config)
+      const { data } = await axios.get('https://localbiz-o59o.onrender.com/api/businesses', config)
       setBusinesses(data)
       if (data.length > 0 && !selectedId) setSelectedId(data[0].id)
     }
@@ -37,7 +37,7 @@ export default function ProductManagement() {
     e.preventDefault()
     setLoading(true)
     try {
-      const { data } = await axios.post('http://localhost:5000/api/products', { ...newItem, businessId: selectedId }, config)
+      const { data } = await axios.post('https://localbiz-o59o.onrender.com/api/products', { ...newItem, businessId: selectedId }, config)
       setProducts([...products, data])
       setShowAdd(false)
       setNewItem({ name: '', description: '', price: '', image: '' })
@@ -51,7 +51,7 @@ export default function ProductManagement() {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure?')) return
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, config)
+      await axios.delete(`https://localbiz-o59o.onrender.com/api/products/${id}`, config)
       setProducts(products.filter(p => p.id !== id))
     } catch (err) {
       console.error(err)
